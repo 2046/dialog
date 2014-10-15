@@ -13,3 +13,6 @@
 [submodule "lib/overlay"]
 	path = lib/overlay
 	url = git@github.com:2046/overlay.git
+[submodule "lib/mask"]
+	path = lib/mask
+	url = git@github.com:2046/mask.git
