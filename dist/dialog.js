@@ -32,27 +32,15 @@ define(function(require, exports, module){
             this.set('overflow', $root.css('overflow'));
         },
         render : function(){
-            var ctx, el;
-    
-            ctx = this;
-            el = this.$('[data-id="content"]').css({
+            this.$('[data-id="content"]').css({
                 position : 'absolute',
                 marginTop : this.get('distance'),
                 marginBottom : this.get('distance')
             });
-            Dialog.superclass.render.call(ctx);
+            Dialog.superclass.render.call(this);
+            pin(this);
     
-            setTimeout(function(){
-                $(['width', 'height']).each(function(index, item){
-                    if(!ctx.get(item)){
-                        ctx.set(item, el['inner' + capitalize(item)]() || 300);
-                    }
-                });
-    
-                ctx.pin();
-            }, 0);
-    
-            return ctx;
+            return this;
         },
         pin : function(){
             var ctx, width, height, eventName, $win, el;
@@ -116,8 +104,28 @@ define(function(require, exports, module){
             }
     
             this.$('[data-id="content"]').html(html + val);
+            pin(this, true);
         }
     });
+    
+    function pin(ctx, reset){
+        var el = ctx.$('[data-id="content"]');
+    
+        if(ctx.rendered){
+            setTimeout(function(){
+                $(['width', 'height']).each(function(index, item){
+                    if(!ctx.get(item)){
+                        ctx.set(item, el['inner' + capitalize(item)]() || 300);
+                    }else if(reset){
+                        ctx.set(item, 'auto');
+                        ctx.set(item, el['inner' + capitalize(item)]() || 300);
+                    }
+                });
+    
+                ctx.pin();
+            }, 0);
+        }
+    };
     
     function ie6fallback(ctx, $win){
         var eventName = 'scroll.dialog' + ctx.cid;
