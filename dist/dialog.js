@@ -69,6 +69,7 @@ define(function(require, exports, module){
             $root.css('overflow', 'hidden');
             this.get('hasMask') && mask.show();
             this.trigger('show');
+            return this;
         },
         hide : function(){
             Dialog.superclass.hide.call(this);
@@ -76,6 +77,7 @@ define(function(require, exports, module){
             this.get('hasMask') && mask.hide();
             this.destroy();
             this.trigger('hide');
+            return this;
         },
         destroy : function(){
             var ctx = this;
