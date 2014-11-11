@@ -68,6 +68,7 @@ Dialog = Overlay.extend({
         $root.css('overflow', 'hidden');
         this.get('hasMask') && mask.show();
         this.trigger('show');
+        return this;
     },
     hide : function(){
         Dialog.superclass.hide.call(this);
@@ -75,6 +76,7 @@ Dialog = Overlay.extend({
         this.get('hasMask') && mask.hide();
         this.destroy();
         this.trigger('hide');
+        return this;
     },
     destroy : function(){
         var ctx = this;
